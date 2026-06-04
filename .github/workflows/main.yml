@@ -1,0 +1,24 @@
+name: Build DASH HVH
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Compile DLL
+        run: |
+          cl /LD /std:c++17 /Fe:DASH_HVH.dll *.cpp /I. /I./Libs/minhook/include /link /LIBPATH:./Libs/minhook/lib minhook.lib /OUT:DASH_HVH.dll /DLL
+        shell: cmd
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: DASH_HVH_Build
+          path: DASH_HVH.dll
