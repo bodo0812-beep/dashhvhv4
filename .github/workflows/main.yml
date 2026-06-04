@@ -13,8 +13,9 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Compile DLL
+        # قمت بتعديل المسارات لتطابق مكان وجود ملفاتك في المجلد Libs/minhook
         run: |
-          cl /LD /std:c++17 /Fe:DASH_HVH.dll *.cpp /I. /I./Libs/minhook/include /link /LIBPATH:./Libs/minhook/lib minhook.lib /OUT:DASH_HVH.dll /DLL
+          cl /LD /std:c++17 /Fe:DASH_HVH.dll *.cpp /I. /I./Libs/minhook /link /LIBPATH:./Libs/minhook minhook.lib /OUT:DASH_HVH.dll /DLL
         shell: cmd
 
       - name: Upload Artifact
